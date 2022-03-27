@@ -1,9 +1,13 @@
+import { formatEther } from "@ethersproject/units";
+import { useEthers, useEtherBalance } from "@usedapp/core";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
+  const { activateBrowserWallet, account } = useEthers();
+  const etherBalance = useEtherBalance(account);
   return (
     <div className={styles.container}>
       <Head>
@@ -17,6 +21,13 @@ const Home: NextPage = () => {
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
         <h1 className="text-3xl font-bold underline">Hello world!</h1>
+        <div>
+          {!account && (
+            <button onClick={() => activateBrowserWallet()}>Connect</button>
+          )}
+          {account && <p>Account: {account}</p>}
+          {etherBalance && <p>Balance: {formatEther(etherBalance)}</p>}
+        </div>
 
         <p className={styles.description}>
           Get started by editing{" "}
