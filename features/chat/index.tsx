@@ -63,8 +63,8 @@ export const Chat = () => {
   channel?.presence.subscribe(console.log);
   channel?.presence.get().then(console.log);
   return (
-    <div className="grid gap-3">
-      <ul>
+    <div className="h-full flex flex-col gap-3">
+      <ul className="flex-grow overflow-auto">
         {receivedMessages.map((item) => (
           <li key={item.id}>
             <div className="my-2 flex gap-1 text-lg">
@@ -76,37 +76,33 @@ export const Chat = () => {
           </li>
         ))}
       </ul>
+      <div className="text-2xl flex justify-between">
+        {emoji}
+        <div className="text-purple-600">
+          {MAX_LENTH - emoji.length / 2} left
+        </div>
+      </div>
       <div className="flex gap-2">
         {freeEmoji.map((item) => (
           <button
             key={item}
-            className="p-4 rounded-md shadow text-2xl hover:shadow-lg"
+            className="btn-ghost"
             onClick={() => addEmoji(item)}
           >
             {item}
           </button>
         ))}
       </div>
-      <div className="text-2xl flex justify-between">
-        {emoji}
-        <div>{MAX_LENTH - emoji.length / 2} left</div>
-      </div>
       <div className="flex gap-2">
-        <button
-          className="py-4 grid place-items-center flex-grow rounded-md shadow text-2xl hover:shadow-lg text-purple-600"
-          onClick={() => removeEmoji()}
-        >
+        <button className="btn-ghost flex-grow" onClick={() => removeEmoji()}>
           <BackspaceIcon className="h-6 w-6" />
         </button>
-        <button
-          className="py-4 grid place-items-center flex-grow rounded-md shadow text-2xl hover:shadow-lg text-purple-600"
-          onClick={() => setEmoji("")}
-        >
+        <button className="btn-ghost flex-grow" onClick={() => setEmoji("")}>
           <XCircleIcon className="h-6 w-6" />
         </button>
         <button
           disabled={emoji.length === 0}
-          className="py-4 grid place-items-center flex-grow rounded-md shadow text-2xl hover:shadow-lg bg-purple-600 text-white disabled:bg-red-500"
+          className="btn-primary flex-grow"
           onClick={sendMessage}
         >
           Send
