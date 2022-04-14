@@ -1,14 +1,12 @@
-import { formatEther } from "@ethersproject/units";
-import { useEthers, useEtherBalance } from "@usedapp/core";
-import { Chat } from "features/chat";
-import type { NextPage } from "next";
-import Head from "next/head";
-import Image from "next/image";
-import styles from "../styles/Home.module.css";
+import { Chat } from 'features/chat'
+import type { NextPage } from 'next'
+import Head from 'next/head'
+import Image from 'next/image'
+import { useConnect } from 'wagmi'
 
 const Home: NextPage = () => {
-  const { activateBrowserWallet, account } = useEthers();
-  const etherBalance = useEtherBalance(account);
+  const [{ data, error }, connect] = useConnect()
+  const metamaskConnector = data.connectors[0]
   return (
     <div className="px-2 py-1 h-screen w-screen">
       <Head>
@@ -18,7 +16,7 @@ const Home: NextPage = () => {
       </Head>
 
       <main className="h-full">
-        {!account && (
+        {!data.connected && (
           <div className="h-full w-full grid place-content-center gap-4">
             <Image
               src="/metamask.svg"
@@ -28,17 +26,16 @@ const Home: NextPage = () => {
             />
             <button
               className="btn-primary"
-              onClick={() => activateBrowserWallet()}
+              onClick={() => connect(metamaskConnector)}
             >
               Connect
             </button>
           </div>
         )}
-        {account && <Chat />}
-        {/* {etherBalance && <p>Balance: {formatEther(etherBalance)}</p>} */}
+        {data.connected && <Chat />}
       </main>
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
