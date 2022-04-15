@@ -1,12 +1,11 @@
+import { useMetamaskAuth } from 'features/auth'
 import { Chat } from 'features/chat'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
-import { useConnect } from 'wagmi'
 
 const Home: NextPage = () => {
-  const [{ data, error }, connect] = useConnect()
-  const metamaskConnector = data.connectors[0]
+  const [{ address, error, loading }, signIn, signOut] = useMetamaskAuth()
   return (
     <div className="px-2 py-1 h-screen w-screen">
       <Head>
@@ -16,7 +15,7 @@ const Home: NextPage = () => {
       </Head>
 
       <main className="h-full">
-        {!data.connected && (
+        {!address && (
           <div className="h-full w-full grid place-content-center gap-4">
             <Image
               src="/metamask.svg"
@@ -24,15 +23,12 @@ const Home: NextPage = () => {
               width={100}
               alt="metamask"
             />
-            <button
-              className="btn-primary"
-              onClick={() => connect(metamaskConnector)}
-            >
+            <button className="btn-primary" onClick={signIn}>
               Connect
             </button>
           </div>
         )}
-        {data.connected && <Chat />}
+        {address && <Chat />}
       </main>
     </div>
   )
