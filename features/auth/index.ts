@@ -5,19 +5,13 @@ import { useConnect } from 'wagmi'
 
 export const ironOptions = {
   cookieName: 'siwe',
-  password: 'complex_password_at_least_32_characters_long',
+  password: process.env.IRON_SESSION_PASSWORD || '',
   cookieOptions: {
     secure: process.env.NODE_ENV === 'production',
   },
 }
 
-// const [state, setState] = React.useState<{
-//   address?: string
-//   error?: Error
-//   loading?: boolean
-// }>({})
-
-const authAtom = atom<{
+export const authAtom = atom<{
   address?: string
   error?: Error
   loading?: boolean

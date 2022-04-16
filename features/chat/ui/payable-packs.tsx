@@ -19,7 +19,6 @@ export const Packs = ({ addEmoji }: Props) => {
   const silver = useEmojiTokenBalance(address, 0)
   // const gold = useEmojiTokenBalance(address, 1)
   // const platinum = useEmojiTokenBalance(address, 2)
-  // console.log(silver)
   return (
     <div className="flex gap-1 disabled:opacity-20">
       {silverPack.map((item) => (

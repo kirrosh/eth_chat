@@ -2,12 +2,11 @@ import {
   IChannelMessage,
   useChannel,
   useInitAbly,
-} from "features/ably/useChannel"
-import { atom, useAtom, useSetAtom } from "jotai"
-import { BackspaceIcon, XCircleIcon } from "@heroicons/react/outline"
-import { useEmojiTokenBalance } from "features/emoji-packs/useEmojiTokenBalance"
-import { Packs } from "./ui/payable-packs"
-import { useAccount } from "wagmi"
+} from 'features/ably/useChannel'
+import { atom, useAtom, useSetAtom } from 'jotai'
+import { BackspaceIcon, XCircleIcon } from '@heroicons/react/outline'
+import { Packs } from './ui/payable-packs'
+import { authAtom } from 'features/auth'
 
 const messagesAtom = atom<IChannelMessage[]>([])
 
@@ -20,7 +19,7 @@ const addMessageAtom = atom<IChannelMessage[], IChannelMessage>(
   }
 )
 
-const emojiAtom = atom("😂😂😂")
+const emojiAtom = atom('😂😂😂')
 const addEmojiAtom = atom(
   (get) => get(emojiAtom),
   (get, set, newEmoji) => {
@@ -37,37 +36,32 @@ const removeEmojiAtom = atom(
   }
 )
 
-const freeEmoji = ["😂", "😜", "😱", "🥲", "😎"]
+const freeEmoji = ['😂', '😜', '😱', '🥲', '😎']
 const MAX_LENTH = 7
 
 const formatEthAddress = (address: string) =>
-  address.slice(0, 6) + "..." + address.slice(-4)
+  address.slice(0, 6) + '...' + address.slice(-4)
 
 export const Chat = () => {
   const [receivedMessages, setMessages] = useAtom(addMessageAtom)
   const addEmoji = useSetAtom(addEmojiAtom)
   const removeEmoji = useSetAtom(removeEmojiAtom)
   const [emoji, setEmoji] = useAtom(emojiAtom)
-  // const { activateBrowserWallet, account } = useEthers()
-  const [{ data: accountData }] = useAccount({
-    fetchEns: true,
-  })
+  const [auth] = useAtom(authAtom)
 
-  // useInitAbly(account)
-  const [channel, ably] = useChannel("chat-demo", setMessages)
+  useInitAbly(auth?.address)
+  const [channel, ably] = useChannel('chat-demo', setMessages)
 
   const sendMessage = async () => {
     await channel?.publish({
-      name: "chat-message",
+      name: 'chat-message',
       data: {
-        account: accountData?.address,
+        account: auth?.address,
         message: emoji,
       },
     })
-    setEmoji("")
+    setEmoji('')
   }
-  channel?.presence.subscribe(console.log)
-  channel?.presence.get().then(console.log)
   return (
     <div className="h-full flex flex-col gap-3">
       <ul className="flex-grow overflow-auto">
@@ -104,7 +98,7 @@ export const Chat = () => {
         <button className="btn-ghost flex-grow" onClick={() => removeEmoji()}>
           <BackspaceIcon className="h-6 w-6" />
         </button>
-        <button className="btn-ghost flex-grow" onClick={() => setEmoji("")}>
+        <button className="btn-ghost flex-grow" onClick={() => setEmoji('')}>
           <XCircleIcon className="h-6 w-6" />
         </button>
         <button

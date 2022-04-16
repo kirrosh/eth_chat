@@ -1,45 +1,45 @@
-import Ably, { Types } from "ably/promises";
-import { atom, useAtomValue, useSetAtom } from "jotai";
-import { useEffect } from "react";
+import Ably from 'ably/promises'
+import { atom, useAtomValue, useSetAtom } from 'jotai'
+import { useEffect } from 'react'
 
-const ablyAtom = atom<Ably.Realtime | null>(null);
+const ablyAtom = atom<Ably.Realtime | null>(null)
 
 export const useInitAbly = (clientId?: string | null) => {
-  const setAbly = useSetAtom(ablyAtom);
+  const setAbly = useSetAtom(ablyAtom)
   useEffect(() => {
     if (!clientId) {
-      return;
+      return
     }
     const ably = new Ably.Realtime.Promise({
-      authUrl: "/api/createTokenRequest",
+      authUrl: '/api/createTokenRequest',
       clientId,
-    });
-    setAbly(ably);
-    return () => setAbly(null);
-  }, [clientId]);
-};
+    })
+    setAbly(ably)
+    return () => setAbly(null)
+  }, [clientId])
+}
 
-export type IChannelMessage = Ably.Types.Message;
+export type IChannelMessage = Ably.Types.Message
 
 export function useChannel(
   channelName: string,
   callbackOnMessage: (msg: IChannelMessage) => void
 ) {
-  const ably = useAtomValue(ablyAtom);
-  const channel = ably?.channels.get(channelName);
+  const ably = useAtomValue(ablyAtom)
+  const channel = ably?.channels.get(channelName)
   useEffect(() => {
     if (channel) {
-      channel.presence.enter("hello");
+      channel.presence.enter('hello')
       channel.subscribe((msg) => {
-        callbackOnMessage(msg);
-      });
+        callbackOnMessage(msg)
+      })
     }
     return () => {
       if (channel) {
-        channel.unsubscribe();
+        channel.unsubscribe()
       }
-    };
-  }, [channel, callbackOnMessage]);
+    }
+  }, [channel, callbackOnMessage])
 
-  return [channel, ably] as [typeof channel, typeof ably];
+  return [channel, ably] as [typeof channel, typeof ably]
 }
