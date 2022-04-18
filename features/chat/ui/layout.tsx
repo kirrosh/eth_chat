@@ -77,11 +77,9 @@ export const ChatLauout: React.FC = ({ children }) => {
                 </div>
               </Transition.Child>
               <div className="flex-shrink-0 flex items-center px-4">
-                <div className="border-round text-xl py-1 px-3">
-                  <h1 className="text-2xl font-semibold text-purple-600">
-                    ETH Emoji Chat
-                  </h1>
-                </div>
+                <h1 className="text-2xl font-semibold text-purple-600">
+                  ETH Emoji Chat
+                </h1>
                 {/* <img
                     className="h-8 w-auto"
                     src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg"
@@ -90,6 +88,7 @@ export const ChatLauout: React.FC = ({ children }) => {
               </div>
               <div className="mt-5 flex-1 h-0 overflow-y-auto">
                 <nav className="px-2 space-y-1">
+                  <h2 className="px-2 text-gray-400">Users</h2>
                   {members.map((item) => (
                     <a
                       key={item.clientId}
@@ -126,6 +125,7 @@ export const ChatLauout: React.FC = ({ children }) => {
           </div>
           <div className="mt-5 flex-grow flex flex-col">
             <nav className="flex-1 px-2 pb-4 space-y-1">
+              <h2 className="px-2 text-gray-400">Users</h2>
               {members.map((item) => (
                 <a
                   key={item.clientId}

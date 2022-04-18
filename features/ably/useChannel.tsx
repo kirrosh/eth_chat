@@ -28,11 +28,9 @@ export function useChannel(
   const ably = useAtomValue(ablyAtom)
   const channel = ably?.channels.get(channelName)
   useEffect(() => {
-    console.log(channel)
     if (channel) {
       channel.presence.enter('hello')
       channel.subscribe((msg) => {
-        console.log(msg)
         callbackOnMessage(msg)
       })
     }
@@ -65,10 +63,8 @@ export const useChannelPresence = (channelName: string) => {
   useEffect(() => {
     const channel = ably?.channels.get(channelName)
     channel?.presence.subscribe((presence) => {
-      console.log(presence)
       setMembers(presence)
     })
   }, [channelName, ably])
-  console.log(members)
   return members
 }

@@ -8,6 +8,7 @@ import { BackspaceIcon, XCircleIcon } from '@heroicons/react/outline'
 import { Packs } from './ui/payable-packs'
 import { authAtom } from 'features/auth'
 import { ChatLauout } from './ui/layout'
+import classNames from 'classnames'
 
 const messagesAtom = atom<IChannelMessage[]>([])
 
@@ -63,7 +64,6 @@ export const Chat = () => {
     })
     setEmoji('')
   }
-  // console.log(receivedMessages)
   return (
     <ChatLauout>
       <div className="h-full flex flex-col gap-3">
@@ -71,7 +71,12 @@ export const Chat = () => {
           {receivedMessages.map((item) => (
             <li key={item.id}>
               <div className="my-2 flex gap-1 text-lg">
-                <div className="px-2 py-1 rounded bg-purple-600 text-white">
+                <div
+                  className={classNames(
+                    'px-2 py-1 rounded',
+                    item.clientId === auth.address && 'bg-purple-600 text-white'
+                  )}
+                >
                   {formatEthAddress(item.clientId)} :
                 </div>
                 <div className="py-1">{item.data.message}</div>
