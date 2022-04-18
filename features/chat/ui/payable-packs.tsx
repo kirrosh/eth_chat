@@ -16,7 +16,7 @@ export const Packs = ({ addEmoji }: Props) => {
   })
   const address = accountData?.address
   const [{}, buyPack] = useBuyEmojiPack(0)
-  const silver = useEmojiTokenBalance(address, 0)
+  // const silver = useEmojiTokenBalance(address, 0)
   // const gold = useEmojiTokenBalance(address, 1)
   // const platinum = useEmojiTokenBalance(address, 2)
   return (

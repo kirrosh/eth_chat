@@ -1,8 +1,8 @@
 import Ably from 'ably/promises'
-import { atom, useAtomValue, useSetAtom } from 'jotai'
+import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { useEffect } from 'react'
 
-const ablyAtom = atom<Ably.Realtime | null>(null)
+export const ablyAtom = atom<Ably.Realtime | null>(null)
 
 export const useInitAbly = (clientId?: string | null) => {
   const setAbly = useSetAtom(ablyAtom)
@@ -28,9 +28,11 @@ export function useChannel(
   const ably = useAtomValue(ablyAtom)
   const channel = ably?.channels.get(channelName)
   useEffect(() => {
+    console.log(channel)
     if (channel) {
       channel.presence.enter('hello')
       channel.subscribe((msg) => {
+        console.log(msg)
         callbackOnMessage(msg)
       })
     }
@@ -39,7 +41,34 @@ export function useChannel(
         channel.unsubscribe()
       }
     }
-  }, [channel, callbackOnMessage])
+  }, [channel, channelName, callbackOnMessage])
 
   return [channel, ably] as [typeof channel, typeof ably]
+}
+
+const membersAtom = atom<Ably.Types.PresenceMessage[]>([])
+
+const setMembersAtom = atom<
+  Ably.Types.PresenceMessage[],
+  Ably.Types.PresenceMessage
+>(
+  (get) => get(membersAtom),
+  (get, set, value: Ably.Types.PresenceMessage) => {
+    set(membersAtom, [...get(membersAtom), value])
+  }
+)
+
+export const useChannelPresence = (channelName: string) => {
+  const [members, setMembers] = useAtom(setMembersAtom)
+  const ably = useAtomValue(ablyAtom)
+
+  useEffect(() => {
+    const channel = ably?.channels.get(channelName)
+    channel?.presence.subscribe((presence) => {
+      console.log(presence)
+      setMembers(presence)
+    })
+  }, [channelName, ably])
+  console.log(members)
+  return members
 }

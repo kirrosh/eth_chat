@@ -20,8 +20,9 @@ export const authAtom = atom<{
 export const useMetamaskAuth = () => {
   const [{ data, error }, connect] = useConnect()
   const [auth, setAuth] = useAtom(authAtom)
-  const connector = data.connectors[0]
+
   const signIn = useCallback(async () => {
+    const connector = data.connectors[0]
     try {
       setAuth((x) => ({ ...x, error: undefined, loading: true }))
       const res = await connect(connector) // connect from useConnect
@@ -61,22 +62,27 @@ export const useMetamaskAuth = () => {
     setAuth({})
   }, [])
 
-  useEffect(() => {
-    const handler = async () => {
-      try {
-        const res = await fetch('/api/auth/me')
-        const json = await res.json()
-        setAuth((x) => ({ ...x, address: json.address }))
-      } finally {
-        setAuth((x) => ({ ...x, loading: false }))
-      }
-    }
-    // 1. page loads
-    ;(async () => await handler())()
+  return [auth, signIn, signOut] as [typeof auth, typeof signIn, typeof signOut]
+}
 
+export const useInitAuth = () => {
+  const [auth, setAuth] = useAtom(authAtom)
+  const handler = useCallback(async () => {
+    try {
+      const res = await fetch('/api/auth/me')
+      const json = await res.json()
+      setAuth((x) => ({ ...x, address: json.address }))
+    } finally {
+      setAuth((x) => ({ ...x, loading: false }))
+    }
+  }, [])
+  useEffect(() => {
+    ;(async () => await handler())()
+  }, [auth.address])
+
+  useEffect(() => {
     // 2. window is focused (in case user logs out of another window)
     window.addEventListener('focus', handler)
     return () => window.removeEventListener('focus', handler)
   }, [])
-  return [auth, signIn, signOut] as [typeof auth, typeof signIn, typeof signOut]
 }

@@ -1,4 +1,4 @@
-import { useMetamaskAuth } from 'features/auth'
+import { useInitAuth, useMetamaskAuth } from 'features/auth'
 import { Chat } from 'features/chat'
 import type { NextPage } from 'next'
 import Head from 'next/head'
@@ -6,6 +6,7 @@ import Image from 'next/image'
 
 const Home: NextPage = () => {
   const [{ address, error, loading }, signIn, signOut] = useMetamaskAuth()
+  useInitAuth()
   return (
     <div className="px-2 py-1 h-screen w-screen">
       <Head>
@@ -14,7 +15,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="h-full">
+      <main className="h-full w-full flex">
         {!address && (
           <div className="h-full w-full grid place-content-center gap-4">
             <Image
