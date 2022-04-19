@@ -1,5 +1,6 @@
 import { useInitAuth, useMetamaskAuth } from 'features/auth'
 import { Chat } from 'features/chat'
+import { ShopOverlay } from 'features/shop'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
@@ -30,6 +31,7 @@ const Home: NextPage = () => {
           </div>
         )}
         {address && <Chat />}
+        {address && <ShopOverlay />}
       </main>
     </div>
   )

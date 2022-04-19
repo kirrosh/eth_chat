@@ -4,31 +4,37 @@ import EmojiPacks from 'artifacts/EmojiPacks.json'
 import EmojiTrader from 'artifacts/EmojiTrader.json'
 import { emoji_address_ropsten } from 'etherium/address/emoji'
 import { useEffect, useMemo, useState } from 'react'
-import { useContractRead, useSigner } from 'wagmi'
+import { useContractRead, useContractWrite, useSigner } from 'wagmi'
 
 const packsInterface = new utils.Interface(EmojiPacks.abi)
 const traderInterface = new utils.Interface(EmojiTrader.abi)
 const provider = getDefaultProvider('ropsten')
 
-export const useBuyEmojiPack = (tokenId: number) => {
+const prices = {
+  0: '1000',
+  1: '10000',
+  2: '100000',
+}
+
+export const useBuyEmojiPack = (tokenId: 0 | 1 | 2) => {
   const [{ data }] = useSigner()
   const args = useMemo(
     () => [
       emoji_address_ropsten.packs,
       tokenId,
       1,
-      { value: utils.parseUnits('1000', 'wei') },
+      { value: utils.parseUnits(prices[tokenId], 'wei') },
     ],
     [emoji_address_ropsten.packs, tokenId]
   )
-  return useContractRead(
+  return useContractWrite(
     {
       addressOrName: emoji_address_ropsten.trader,
       contractInterface: traderInterface,
       signerOrProvider: data,
     },
     'purchase',
-    { args, skip: true }
+    { args }
   )
 }
 

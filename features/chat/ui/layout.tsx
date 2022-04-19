@@ -1,20 +1,10 @@
-import { Fragment, useState } from 'react'
+import { Fragment } from 'react'
 import { Dialog, Menu, Transition } from '@headlessui/react'
-import {
-  BellIcon,
-  CalendarIcon,
-  ChartBarIcon,
-  FolderIcon,
-  HomeIcon,
-  InboxIcon,
-  MenuAlt2Icon,
-  UsersIcon,
-  XIcon,
-} from '@heroicons/react/outline'
-import { SearchIcon } from '@heroicons/react/solid'
-import { atom, useAtom, useAtomValue } from 'jotai'
+import { MenuAlt2Icon, XIcon } from '@heroicons/react/outline'
+import { atom, useAtom } from 'jotai'
 import { useMetamaskAuth } from 'features/auth'
-import { ablyAtom, useChannelPresence } from 'features/ably/useChannel'
+import { useChannelPresence } from 'features/ably/useChannel'
+import { shopOverlayAtom } from 'features/shop/ui/overlay'
 
 const sidebarAtom = atom(false)
 
@@ -23,6 +13,7 @@ const shortAddress = (address: string) =>
 
 export const ChatLauout: React.FC = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useAtom(sidebarAtom)
+  const [isOpen, setOpen] = useAtom(shopOverlayAtom)
   const [{ address, error, loading }, signIn, signOut] = useMetamaskAuth()
 
   const members = useChannelPresence('chat-demo')
@@ -161,7 +152,21 @@ export const ChatLauout: React.FC = ({ children }) => {
             <MenuAlt2Icon className="h-6 w-6" aria-hidden="true" />
           </button>
           <div className="flex-1 px-4 flex justify-between">
-            <div className="flex-1 flex">
+            <div className="flex-1 flex items-center">
+              <div>
+                <button
+                  onClick={() => setOpen(true)}
+                  className="btn-primary py-1 md:hidden"
+                >
+                  Shop
+                </button>
+                <button
+                  onClick={() => setOpen(true)}
+                  className="btn-primary py-1 hidden md:flex"
+                >
+                  Buy more Emoji!
+                </button>
+              </div>
               {/* <form className="w-full flex md:ml-0" action="#" method="GET">
                 <label htmlFor="search-field" className="sr-only">
                   Search

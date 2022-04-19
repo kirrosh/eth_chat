@@ -5,7 +5,6 @@ import {
 } from 'features/ably/useChannel'
 import { atom, useAtom, useSetAtom } from 'jotai'
 import { BackspaceIcon, XCircleIcon } from '@heroicons/react/outline'
-import { Packs } from './ui/payable-packs'
 import { authAtom } from 'features/auth'
 import { ChatLauout } from './ui/layout'
 import classNames from 'classnames'
@@ -101,7 +100,6 @@ export const Chat = () => {
             </button>
           ))}
         </div>
-        <Packs addEmoji={addEmoji} />
         <div className="flex gap-2">
           <button className="btn-ghost flex-grow" onClick={() => removeEmoji()}>
             <BackspaceIcon className="h-6 w-6" />

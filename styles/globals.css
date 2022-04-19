@@ -4,10 +4,10 @@
 
 @layer components {
   .btn-primary {
-    @apply p-4 grid place-items-center rounded-md shadow text-2xl hover:shadow-lg bg-purple-600 text-white disabled:bg-red-500;
+    @apply p-2 md:p-4 grid place-items-center rounded-md shadow text-2xl hover:shadow-lg bg-purple-600 text-white disabled:bg-red-500;
   }
   .btn-ghost {
-    @apply p-4 grid place-items-center rounded-md shadow text-2xl hover:shadow-lg text-purple-600  disabled:bg-red-500;
+    @apply p-2 md:p-4 grid place-items-center rounded-md shadow text-2xl hover:shadow-lg text-purple-600  disabled:bg-red-500;
   }
 }
 
