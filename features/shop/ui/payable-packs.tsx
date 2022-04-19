@@ -56,6 +56,13 @@ export const Packs = () => {
           Buy Platinum pack (100000 wei)
         </button>
       </div>
+      <a
+        href="https://ropsten.oregonctf.org/"
+        target={'_blank'}
+        className="underline text-purple-500"
+      >
+        Get ETH (Ropsten testnet!)
+      </a>
     </div>
   )
 }
