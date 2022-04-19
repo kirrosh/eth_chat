@@ -58,5 +58,5 @@ export const useEmojiTokenBalance = (
       res.data && setBalance(utils.formatUnits(res.data, 'wei'))
     })
   }, [args])
-  return balance
+  return Number(balance)
 }

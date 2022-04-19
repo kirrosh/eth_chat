@@ -8,6 +8,14 @@ import { BackspaceIcon, XCircleIcon } from '@heroicons/react/outline'
 import { authAtom } from 'features/auth'
 import { ChatLauout } from './ui/layout'
 import classNames from 'classnames'
+import {
+  silverPack,
+  goldPack,
+  platinumPack,
+  useEmojiTokenBalance,
+} from 'features/shop'
+
+import { CgSpinner } from 'react-icons/cg'
 
 const messagesAtom = atom<IChannelMessage[]>([])
 
@@ -50,8 +58,10 @@ export const Chat = () => {
   const [emoji, setEmoji] = useAtom(emojiAtom)
   const [auth] = useAtom(authAtom)
 
-  useInitAbly(auth?.address)
   const [channel, ably] = useChannel('chat-demo', setMessages)
+  const silver = useEmojiTokenBalance(auth?.address, 0)
+  const gold = useEmojiTokenBalance(auth?.address, 1)
+  const platinum = useEmojiTokenBalance(auth?.address, 2)
 
   const sendMessage = async () => {
     await channel?.publish({
@@ -63,6 +73,8 @@ export const Chat = () => {
     })
     setEmoji('')
   }
+  const isLoading =
+    Number.isNaN(silver) || Number.isNaN(gold) || Number.isNaN(platinum)
   return (
     <ChatLauout>
       <div className="h-full flex flex-col gap-3">
@@ -89,7 +101,7 @@ export const Chat = () => {
             {MAX_LENTH - emoji.length / 2} left
           </div>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-3 justify-start flex-wrap">
           {freeEmoji.map((item) => (
             <button
               key={item}
@@ -99,6 +111,41 @@ export const Chat = () => {
               {item}
             </button>
           ))}
+          {silver > 0 &&
+            silverPack.map((item) => (
+              <button
+                key={item}
+                className="btn-ghost bg-zinc-100"
+                onClick={() => addEmoji(item)}
+              >
+                {item}
+              </button>
+            ))}
+          {gold > 0 &&
+            goldPack.map((item) => (
+              <button
+                key={item}
+                className="btn-ghost bg-amber-100"
+                onClick={() => addEmoji(item)}
+              >
+                {item}
+              </button>
+            ))}
+          {platinum > 0 &&
+            platinumPack.map((item) => (
+              <button
+                key={item}
+                className="btn-ghost bg-slate-200"
+                onClick={() => addEmoji(item)}
+              >
+                {item}
+              </button>
+            ))}
+          {isLoading && (
+            <div className="p-2 md:p-4 grid items-center">
+              <CgSpinner className="animate-spin w-6 h-6 text-purple-600" />
+            </div>
+          )}
         </div>
         <div className="flex gap-2">
           <button className="btn-ghost flex-grow" onClick={() => removeEmoji()}>

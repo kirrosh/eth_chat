@@ -1,20 +1,20 @@
 import Ably from 'ably/promises'
 import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { useEffect } from 'react'
+import { union, unionBy } from 'lodash'
 
 export const ablyAtom = atom<Ably.Realtime | null>(null)
 
 export const useInitAbly = (clientId?: string | null) => {
   const setAbly = useSetAtom(ablyAtom)
   useEffect(() => {
-    if (!clientId) {
-      return
+    if (clientId) {
+      const ably = new Ably.Realtime.Promise({
+        authUrl: '/api/createTokenRequest',
+        clientId,
+      })
+      setAbly(ably)
     }
-    const ably = new Ably.Realtime.Promise({
-      authUrl: '/api/createTokenRequest',
-      clientId,
-    })
-    setAbly(ably)
     return () => setAbly(null)
   }, [clientId])
 }
@@ -52,7 +52,9 @@ const setMembersAtom = atom<
 >(
   (get) => get(membersAtom),
   (get, set, value: Ably.Types.PresenceMessage) => {
-    set(membersAtom, [...get(membersAtom), value])
+    const currentUsers = get(membersAtom)
+    const newUsers = unionBy(currentUsers, [value], 'clientId')
+    set(membersAtom, newUsers)
   }
 )
 

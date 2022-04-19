@@ -15,7 +15,7 @@ export const authAtom = atom<{
   address?: string
   error?: Error
   loading?: boolean
-}>({})
+}>({ loading: true })
 
 export const useMetamaskAuth = () => {
   const [{ data, error }, connect] = useConnect()
