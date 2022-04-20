@@ -1,7 +1,7 @@
 import { atom, useAtom } from 'jotai'
 import { useCallback, useEffect } from 'react'
 import { SiweMessage } from 'siwe'
-import { useConnect } from 'wagmi'
+import { useAccount, useConnect } from 'wagmi'
 
 export const ironOptions = {
   cookieName: 'siwe',
@@ -13,12 +13,14 @@ export const ironOptions = {
 
 export const authAtom = atom<{
   address?: string
+  chainId?: number
   error?: Error
   loading?: boolean
 }>({ loading: true })
 
 export const useMetamaskAuth = () => {
   const [{ data, error }, connect] = useConnect()
+  const [account] = useAccount()
   const [auth, setAuth] = useAtom(authAtom)
 
   const signIn = useCallback(async () => {
@@ -28,6 +30,7 @@ export const useMetamaskAuth = () => {
       const res = await connect(connector) // connect from useConnect
       if (!res.data) throw res.error ?? new Error('Something went wrong')
       const address = res.data.account
+      const chainId = res.data.chain?.id
       const nonceRes = await fetch('/api/auth/nonce')
       const message = new SiweMessage({
         domain: window.location.host,
@@ -51,7 +54,7 @@ export const useMetamaskAuth = () => {
       })
       if (!verifyRes.ok) throw new Error('Error verifying message')
 
-      setAuth((x) => ({ ...x, address, loading: false }))
+      setAuth((x) => ({ ...x, address, loading: false, chainId }))
     } catch (error: any) {
       setAuth((x) => ({ ...x, error, loading: false }))
     }
@@ -61,6 +64,16 @@ export const useMetamaskAuth = () => {
     await fetch('/api/auth/logout')
     setAuth({})
   }, [])
+
+  useEffect(() => {
+    if (
+      account.data?.address &&
+      auth.address &&
+      account.data?.address !== auth.address
+    ) {
+      signOut()
+    }
+  }, [account.data?.address, auth.address])
 
   return [auth, signIn, signOut] as [typeof auth, typeof signIn, typeof signOut]
 }

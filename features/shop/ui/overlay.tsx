@@ -1,13 +1,15 @@
 import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
-import { atom, useAtom } from 'jotai'
+import { atom, useAtom, useAtomValue } from 'jotai'
 import { Packs } from './payable-packs'
+import { authAtom } from 'features/auth'
 
 export const shopOverlayAtom = atom<boolean>(false)
 
 export const ShopOverlay = () => {
   const [open, setOpen] = useAtom(shopOverlayAtom)
+  const auth = useAtomValue(authAtom)
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -62,11 +64,18 @@ export const ShopOverlay = () => {
                 <div className="flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl">
                   <div className="px-4 sm:px-6">
                     <Dialog.Title className="text-lg font-medium text-gray-900">
-                      Shop (Ropsten testnet!)
+                      Shop
                     </Dialog.Title>
                   </div>
                   <div className="relative mt-6 flex-1 px-4 sm:px-6">
-                    <Packs />
+                    {auth.chainId === 3 ? (
+                      <Packs />
+                    ) : (
+                      <h1>
+                        Only <span className="text-purple-400">Ropsten</span>{' '}
+                        testnet
+                      </h1>
+                    )}
                   </div>
                 </div>
               </div>
