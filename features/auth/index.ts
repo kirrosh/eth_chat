@@ -56,7 +56,7 @@ export const useMetamaskAuth = () => {
 
       setAuth((x) => ({ ...x, address, loading: false, chainId }))
     } catch (error: any) {
-      setAuth((x) => ({ ...x, error, loading: false }))
+      setAuth({ error, loading: false })
     }
   }, [])
 
