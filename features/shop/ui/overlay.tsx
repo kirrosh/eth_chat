@@ -61,9 +61,9 @@ export const ShopOverlay = () => {
                     </button>
                   </div>
                 </Transition.Child>
-                <div className="flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl">
+                <div className="flex h-full flex-col overflow-y-auto bg-dark-1 py-6 shadow-xl">
                   <div className="px-4 sm:px-6">
-                    <Dialog.Title className="text-lg font-medium text-gray-900">
+                    <Dialog.Title className="text-lg font-medium text-gray-200">
                       Shop
                     </Dialog.Title>
                   </div>
@@ -72,7 +72,7 @@ export const ShopOverlay = () => {
                       <Packs />
                     ) : (
                       <h1>
-                        Only <span className="text-purple-400">Ropsten</span>{' '}
+                        Only <span className="text-primary">Ropsten</span>{' '}
                         testnet
                       </h1>
                     )}

@@ -4,10 +4,10 @@
 
 @layer components {
   .btn-primary {
-    @apply p-2 md:p-4 grid place-items-center rounded-md shadow text-2xl hover:shadow-lg bg-purple-600 text-white disabled:bg-red-500;
+    @apply p-2 md:p-4 grid place-items-center rounded-md shadow text-2xl hover:shadow-lg border border-primary bg-primary text-white disabled:bg-[red] disabled:border-[red];
   }
   .btn-ghost {
-    @apply p-2 md:p-4 grid place-items-center rounded-md shadow text-2xl hover:shadow-lg text-purple-600  disabled:bg-red-500;
+    @apply p-2 md:p-4 grid place-items-center rounded-md shadow text-2xl hover:shadow-lg border text-primary bg-dark-0 border-dark-3 disabled:bg-[red];
   }
 }
 
@@ -15,6 +15,7 @@ html,
 body {
   padding: 0;
   margin: 0;
+  background-color: #111111;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }

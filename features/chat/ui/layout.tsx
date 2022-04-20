@@ -46,7 +46,7 @@ export const ChatLauout: React.FC = ({ children }) => {
             leaveFrom="translate-x-0"
             leaveTo="-translate-x-full"
           >
-            <div className="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-white">
+            <div className="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-dark-0">
               <Transition.Child
                 as={Fragment}
                 enter="ease-in-out duration-300"
@@ -68,7 +68,7 @@ export const ChatLauout: React.FC = ({ children }) => {
                 </div>
               </Transition.Child>
               <div className="flex-shrink-0 flex items-center px-4">
-                <h1 className="text-2xl font-semibold text-purple-600">
+                <h1 className="text-2xl font-semibold text-primary">
                   ETH Emoji Chat
                 </h1>
                 {/* <img
@@ -84,7 +84,7 @@ export const ChatLauout: React.FC = ({ children }) => {
                     <a
                       key={item.clientId}
                       // href={item.href}
-                      className="group flex items-center px-2 py-2 text-base font-medium rounded-md"
+                      className="group flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-200"
                       // className={classNames(
                       //   item.current
                       //     ? 'bg-gray-100 text-gray-900'
@@ -108,9 +108,9 @@ export const ChatLauout: React.FC = ({ children }) => {
       {/* Static sidebar for desktop */}
       <div className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
         {/* Sidebar component, swap this element with another sidebar if you like */}
-        <div className="flex flex-col flex-grow border-r border-gray-200 pt-5 bg-white overflow-y-auto">
+        <div className="flex flex-col flex-grow border-r border-dark-3 pt-5 bg-dark-0 overflow-y-auto">
           <div className="flex items-center flex-shrink-0 px-4">
-            <h1 className="text-2xl font-semibold text-purple-600">
+            <h1 className="text-2xl font-semibold text-primary">
               ETH Emoji Chat
             </h1>
           </div>
@@ -121,7 +121,7 @@ export const ChatLauout: React.FC = ({ children }) => {
                 <a
                   key={item.clientId}
                   // href={item.href}
-                  className="group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+                  className="group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-200"
                   // className={classNames(
                   //   item.current ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
                   //   'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
@@ -142,10 +142,10 @@ export const ChatLauout: React.FC = ({ children }) => {
         </div>
       </div>
       <div className="md:pl-64 flex flex-col flex-1">
-        <div className="sticky top-0 z-10 flex-shrink-0 flex h-16 bg-white shadow">
+        <div className="sticky top-0 z-10 flex-shrink-0 flex h-16 bg-dark-0 shadow">
           <button
             type="button"
-            className="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
+            className="px-4 border-r border-dark-3 text-primary focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
             onClick={() => setSidebarOpen(true)}
           >
             <span className="sr-only">Open sidebar</span>
@@ -188,7 +188,7 @@ export const ChatLauout: React.FC = ({ children }) => {
             <div className="ml-4 flex items-center md:ml-6">
               {/* <button
                 type="button"
-                className="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="bg-dark-0 p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
                 <span className="sr-only">View notifications</span>
                 <BellIcon className="h-6 w-6" aria-hidden="true" />
@@ -197,9 +197,9 @@ export const ChatLauout: React.FC = ({ children }) => {
               {/* Profile dropdown */}
               <Menu as="div" className="ml-3 relative">
                 <div>
-                  <Menu.Button className="max-w-xs bg-white flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                  <Menu.Button className="max-w-xs bg-dark-0 flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     <span className="sr-only">Open user menu</span>
-                    <div className="border rounded-2xl border-black text-xl py-1 px-3">
+                    <div className="border rounded-2xl border-dark-3 text-primary text-xl py-1 px-3">
                       {address && shortAddress(address)}
                     </div>
                     {/* <img
@@ -218,10 +218,10 @@ export const ChatLauout: React.FC = ({ children }) => {
                   leaveFrom="transform opacity-100 scale-100"
                   leaveTo="transform opacity-0 scale-95"
                 >
-                  <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-dark-0 ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <Menu.Item>
                       <a
-                        className="block px-4 py-2 text-sm text-gray-700 cursor-pointer"
+                        className="block px-4 py-2 text-sm text-gray-300 cursor-pointer"
                         onClick={signOut}
                       >
                         Log Out

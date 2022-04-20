@@ -59,7 +59,7 @@ export const Packs = () => {
       <a
         href="https://ropsten.oregonctf.org/"
         target={'_blank'}
-        className="underline text-purple-500"
+        className="underline text-primary"
       >
         Get ETH (Ropsten testnet!)
       </a>

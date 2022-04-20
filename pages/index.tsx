@@ -22,7 +22,7 @@ const Home: NextPage = () => {
       <main className="h-full w-full flex">
         {loading ? (
           <div className="h-full w-full grid place-items-center">
-            <CgSpinner className="animate-spin w-12 h-12 text-purple-600" />
+            <CgSpinner className="animate-spin w-12 h-12 text-primary" />
           </div>
         ) : (
           <>

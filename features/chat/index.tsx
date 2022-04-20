@@ -85,7 +85,7 @@ export const Chat = () => {
                 <div
                   className={classNames(
                     'px-2 py-1 rounded',
-                    item.clientId === auth.address && 'bg-purple-600 text-white'
+                    item.clientId === auth.address && 'bg-primary text-white'
                   )}
                 >
                   {formatEthAddress(item.clientId)} :
@@ -97,7 +97,7 @@ export const Chat = () => {
         </ul>
         <div className="text-2xl flex justify-between">
           {emoji}
-          <div className="text-purple-600">
+          <div className="text-primary">
             {MAX_LENTH - emoji.length / 2} left
           </div>
         </div>
@@ -143,7 +143,7 @@ export const Chat = () => {
             ))}
           {isLoading && (
             <div className="p-2 md:p-4 grid items-center">
-              <CgSpinner className="animate-spin w-6 h-6 text-purple-600" />
+              <CgSpinner className="animate-spin w-6 h-6 text-primary" />
             </div>
           )}
         </div>
