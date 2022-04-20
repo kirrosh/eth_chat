@@ -5,7 +5,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { method } = req
   switch (method) {
-    case 'GET':
+    case 'POST':
       req.session.destroy()
       res.send({ ok: true })
       break

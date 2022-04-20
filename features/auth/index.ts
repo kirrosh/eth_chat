@@ -63,7 +63,7 @@ export const useMetamaskAuth = () => {
   }, [])
 
   const signOut = useCallback(async () => {
-    await fetch('/api/auth/logout')
+    await fetch('/api/auth/logout', { method: 'POST' })
     setAuth({})
   }, [])
 
