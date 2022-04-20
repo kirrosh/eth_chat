@@ -1,9 +1,10 @@
+import { IronSessionOptions } from 'iron-session'
 import { atom, useAtom } from 'jotai'
 import { useCallback, useEffect } from 'react'
 import { SiweMessage } from 'siwe'
 import { useAccount, useConnect } from 'wagmi'
 
-export const ironOptions = {
+export const ironOptions: IronSessionOptions = {
   cookieName: process.env.IRON_SESSION_COOKIE_NAME || 'siwe',
   password: process.env.IRON_SESSION_PASSWORD || '',
   cookieOptions: {
@@ -37,7 +38,7 @@ export const useMetamaskAuth = () => {
         address,
         statement: 'Sign in with Ethereum to the app.',
         uri: window.location.origin,
-        version: '2',
+        version: '1',
         chainId: res.data.chain?.id,
         nonce: await nonceRes.text(),
       })
