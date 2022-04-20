@@ -4,7 +4,7 @@ import { SiweMessage } from 'siwe'
 import { useAccount, useConnect } from 'wagmi'
 
 export const ironOptions = {
-  cookieName: 'siwe',
+  cookieName: process.env.IRON_SESSION_COOKIE_NAME || 'siwe',
   password: process.env.IRON_SESSION_PASSWORD || '',
   cookieOptions: {
     secure: process.env.NODE_ENV === 'production',
@@ -37,7 +37,7 @@ export const useMetamaskAuth = () => {
         address,
         statement: 'Sign in with Ethereum to the app.',
         uri: window.location.origin,
-        version: '1',
+        version: '2',
         chainId: res.data.chain?.id,
         nonce: await nonceRes.text(),
       })
@@ -56,6 +56,7 @@ export const useMetamaskAuth = () => {
 
       setAuth((x) => ({ ...x, address, loading: false, chainId }))
     } catch (error: any) {
+      console.log(error)
       setAuth({ error, loading: false })
     }
   }, [])
