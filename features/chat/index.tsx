@@ -117,7 +117,7 @@ export const Chat = () => {
             silverPack.map((item) => (
               <button
                 key={item}
-                className="btn-ghost bg-zinc-100"
+                className="btn-ghost border-zinc-400"
                 onClick={() => addEmoji(item)}
               >
                 {item}
@@ -127,7 +127,7 @@ export const Chat = () => {
             goldPack.map((item) => (
               <button
                 key={item}
-                className="btn-ghost bg-amber-100"
+                className="btn-ghost border-amber-400"
                 onClick={() => addEmoji(item)}
               >
                 {item}
@@ -137,7 +137,7 @@ export const Chat = () => {
             platinumPack.map((item) => (
               <button
                 key={item}
-                className="btn-ghost bg-slate-200"
+                className="btn-ghost border-slate-200"
                 onClick={() => addEmoji(item)}
               >
                 {item}

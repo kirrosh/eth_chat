@@ -2,7 +2,7 @@ import { useBuyEmojiPack } from 'features/shop/lib/useEmojiTokenBalance'
 
 export const silverPack = ['🥸', '🤓', '🧐', '🤨', '😝']
 export const goldPack = ['👺', '🤯', '💩', '😺', '💃']
-export const platinumPack = ['👀', '🍑', '🏴‍☠️', '🔞', '💯']
+export const platinumPack = ['👀', '🍑', '💋', '🔞', '💯']
 
 export const Packs = () => {
   const [{}, buySilverPack] = useBuyEmojiPack(0)
@@ -14,14 +14,14 @@ export const Packs = () => {
       <div className="flex flex-col gap-2">
         <div className="flex justify-between disabled:opacity-20">
           {silverPack.map((item) => (
-            <button key={item} className="btn-ghost bg-zinc-100">
+            <button key={item} className="btn-ghost border-zinc-400">
               {item}
             </button>
           ))}
         </div>
         <button
           onClick={() => buySilverPack()}
-          className="btn-ghost bg-zinc-100"
+          className="btn-ghost border-zinc-400 text-zinc-400"
         >
           Buy Silver pack (1000 wei)
         </button>
@@ -29,14 +29,14 @@ export const Packs = () => {
       <div className="flex flex-col gap-2">
         <div className="flex justify-between disabled:opacity-20">
           {goldPack.map((item) => (
-            <button key={item} className="btn-ghost bg-amber-100">
+            <button key={item} className="btn-ghost border-amber-400">
               {item}
             </button>
           ))}
         </div>
         <button
           onClick={() => buyGoldPack()}
-          className="btn-ghost bg-amber-100"
+          className="btn-ghost border-amber-400 text-amber-400"
         >
           Buy Gold pack (10000 wei)
         </button>
@@ -44,14 +44,14 @@ export const Packs = () => {
       <div className="flex flex-col gap-2">
         <div className="flex justify-between disabled:opacity-20">
           {platinumPack.map((item) => (
-            <button key={item} className="btn-ghost bg-slate-100">
+            <button key={item} className="btn-ghost border-slate-200">
               {item}
             </button>
           ))}
         </div>
         <button
           onClick={() => buyPlatinumPack()}
-          className="btn-ghost bg-slate-100"
+          className="btn-ghost border-slate-200 text-slate-200"
         >
           Buy Platinum pack (100000 wei)
         </button>
@@ -59,7 +59,7 @@ export const Packs = () => {
       <a
         href="https://ropsten.oregonctf.org/"
         target={'_blank'}
-        className="underline text-primary"
+        className="underline text-gray-200"
       >
         Get ETH (Ropsten testnet!)
       </a>
