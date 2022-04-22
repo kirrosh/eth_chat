@@ -4,6 +4,7 @@ import {
   useInitAbly,
 } from 'features/ably/useChannel'
 import { atom, useAtom, useSetAtom } from 'jotai'
+import { atomWithReset, useResetAtom } from 'jotai/utils'
 import { BackspaceIcon, XCircleIcon } from '@heroicons/react/outline'
 import { authAtom } from 'features/auth'
 import { ChatLauout } from './ui/layout'
@@ -17,14 +18,14 @@ import {
 
 import { CgSpinner } from 'react-icons/cg'
 
-const messagesAtom = atom<IChannelMessage[]>([])
+const messagesAtom = atomWithReset<IChannelMessage[]>([])
 
-const addMessageAtom = atom<IChannelMessage[], IChannelMessage>(
+const addMessagesAtom = atom<IChannelMessage[], IChannelMessage[]>(
   (get) => get(messagesAtom),
-  (get, set, message: IChannelMessage) => {
+  (get, set, newMessage: IChannelMessage[]) => {
     const messages = get(messagesAtom)
     const history = messages.slice(-199)
-    set(messagesAtom, [...history, message])
+    set(messagesAtom, [...history, ...newMessage])
   }
 )
 
@@ -52,13 +53,14 @@ const formatEthAddress = (address: string) =>
   address.slice(0, 6) + '...' + address.slice(-4)
 
 export const Chat = () => {
-  const [receivedMessages, setMessages] = useAtom(addMessageAtom)
+  const [receivedMessages, addMessages] = useAtom(addMessagesAtom)
+  const resetMessages = useResetAtom(messagesAtom)
   const addEmoji = useSetAtom(addEmojiAtom)
   const removeEmoji = useSetAtom(removeEmojiAtom)
   const [emoji, setEmoji] = useAtom(emojiAtom)
   const [auth] = useAtom(authAtom)
 
-  const [channel, ably] = useChannel('chat-demo', setMessages)
+  const [channel, ably] = useChannel('chat-demo', addMessages, resetMessages)
   const silver = useEmojiTokenBalance(auth?.address, 0)
   const gold = useEmojiTokenBalance(auth?.address, 1)
   const platinum = useEmojiTokenBalance(auth?.address, 2)
@@ -84,7 +86,7 @@ export const Chat = () => {
               <div className="my-2 flex gap-1 text-lg">
                 <div
                   className={classNames(
-                    'px-2 py-1 rounded',
+                    'px-2 py-1 rounded text-gray-200',
                     item.clientId === auth.address && 'bg-primary text-white'
                   )}
                 >

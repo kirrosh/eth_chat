@@ -23,23 +23,26 @@ export type IChannelMessage = Ably.Types.Message
 
 export function useChannel(
   channelName: string,
-  callbackOnMessage: (msg: IChannelMessage) => void
+  callbackOnMessage: (msgs: IChannelMessage[]) => void,
+  clearMessages: () => void
 ) {
   const ably = useAtomValue(ablyAtom)
   const channel = ably?.channels.get(channelName)
   useEffect(() => {
-    if (channel) {
+    if (channel?.name) {
       channel.presence.enter('hello')
+      channel
+        .history({ limit: 100, direction: 'forwards' })
+        .then((newMessages) => callbackOnMessage(newMessages.items))
       channel.subscribe((msg) => {
-        callbackOnMessage(msg)
+        callbackOnMessage([msg])
       })
     }
     return () => {
-      if (channel) {
-        channel.unsubscribe()
-      }
+      clearMessages()
+      channel?.unsubscribe()
     }
-  }, [channel, channelName, callbackOnMessage])
+  }, [channel?.name])
 
   return [channel, ably] as [typeof channel, typeof ably]
 }

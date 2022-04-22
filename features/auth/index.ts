@@ -27,7 +27,7 @@ export const useMetamaskAuth = () => {
   const signIn = useCallback(async () => {
     const connector = data.connectors[0]
     try {
-      setAuth((x) => ({ ...x, error: undefined, loading: true }))
+      setAuth({ loading: true })
       const res = await connect(connector) // connect from useConnect
       if (!res.data) throw res.error ?? new Error('Something went wrong')
       const address = res.data.account
@@ -55,9 +55,8 @@ export const useMetamaskAuth = () => {
       })
       if (!verifyRes.ok) throw new Error('Error verifying message')
 
-      setAuth((x) => ({ ...x, address, loading: false, chainId }))
+      setAuth({ address, loading: false, chainId })
     } catch (error: any) {
-      console.log(error)
       setAuth({ error, loading: false })
     }
   }, [])
@@ -86,7 +85,7 @@ export const useInitAuth = () => {
     try {
       const res = await fetch('/api/auth/me')
       const json = await res.json()
-      setAuth((x) => ({ ...x, address: json.address }))
+      json.address && setAuth((x) => ({ ...x, address: json.address }))
     } finally {
       setAuth((x) => ({ ...x, loading: false }))
     }
