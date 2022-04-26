@@ -1,34 +1,45 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# ETH Chat
 
-## Getting Started
+Full-Stack Next.js 😄 chat app connected to Ethereum blockchain (Ropsten network).
 
-First, run the development server:
+Core features:
 
-```bash
-npm run dev
-# or
-yarn dev
+- Modern frontend ([Next.js](https://nextjs.org/), [Tailwind](https://tailwindcss.com/), [Jotai](https://jotai.org/), [Typescript](https://www.typescriptlang.org/))
+- Autorisation with Metamask ([Siwe](https://github.com/spruceid/siwe), [Iron-session](https://github.com/vvo/iron-session))
+- Emoji shop ([Wagmi](https://wagmi.sh/))
+- Ethereum smart contracts ([Hardhat](https://hardhat.org/), [Openzeppelin](https://openzeppelin.com/))
+- Realtime chat ([Ably](https://ably.com/))
+
+## Web APP
+
+.env
+
+```
+ABLY_API_KEY=
+IRON_SESSION_PASSWORD=
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Standard Next.js commands for dev/build (https://nextjs.org/docs/getting-started)
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+```
+npm run dev
+npm run build
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+Smart contracts are placed in `/ethereum` folder.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Deploy all contracts and add listings:
 
-## Learn More
+```
+npx hardhat run --network ropsten scripts/deploy.ts
+```
 
-To learn more about Next.js, take a look at the following resources:
+`/ethereum/address/emoji` should be manually updated after deploy.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Also files (`/ethereum/artifacts/contracts/[name].sol/[name].json`) should be copied to `/artifacts`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Add listings after deploy:
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```
+npx hardhat run --network ropsten scripts/addListings.ts
+```
