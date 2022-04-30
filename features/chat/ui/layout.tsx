@@ -3,8 +3,8 @@ import { Dialog, Menu, Transition } from '@headlessui/react'
 import { MenuAlt2Icon, XIcon } from '@heroicons/react/outline'
 import { atom, useAtom } from 'jotai'
 import { useMetamaskAuth } from 'features/auth'
-import { useChannelPresence } from 'features/ably/useChannel'
-import { shopOverlayAtom } from 'features/shop/ui/overlay'
+import { useChannelPresence } from 'features/ably'
+import { shopOverlayAtom } from 'features/shop'
 
 const sidebarAtom = atom(false)
 

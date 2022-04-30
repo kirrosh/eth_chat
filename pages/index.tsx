@@ -1,4 +1,4 @@
-import { useInitAbly } from 'features/ably/useChannel'
+import { useInitAbly } from 'features/ably'
 import { useInitAuth, useMetamaskAuth } from 'features/auth'
 import { Chat } from 'features/chat'
 import { ShopOverlay } from 'features/shop'

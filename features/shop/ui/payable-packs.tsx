@@ -1,4 +1,4 @@
-import { useBuyEmojiPack } from 'features/shop/lib/useEmojiTokenBalance'
+import { useBuyEmojiPack } from '../lib/useEmojiTokenBalance'
 
 export const silverPack = ['🥸', '🤓', '🧐', '🤨', '😝']
 export const goldPack = ['👺', '🤯', '💩', '😺', '💃']

@@ -1,8 +1,4 @@
-import {
-  IChannelMessage,
-  useChannel,
-  useInitAbly,
-} from 'features/ably/useChannel'
+import { IChannelMessage, useChannel } from 'features/ably'
 import { atom, useAtom, useSetAtom } from 'jotai'
 import { atomWithReset, useResetAtom } from 'jotai/utils'
 import { BackspaceIcon, XCircleIcon } from '@heroicons/react/outline'
