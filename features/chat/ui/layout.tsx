@@ -23,7 +23,7 @@ export const ChatLauout: React.FC = ({ children }) => {
       <Transition.Root show={sidebarOpen} as={Fragment}>
         <Dialog
           as="div"
-          className="fixed inset-0 flex z-40 md:hidden"
+          className="fixed inset-0 z-40 flex md:hidden"
           onClose={setSidebarOpen}
         >
           <Transition.Child
@@ -46,7 +46,7 @@ export const ChatLauout: React.FC = ({ children }) => {
             leaveFrom="translate-x-0"
             leaveTo="-translate-x-full"
           >
-            <div className="relative flex-1 flex flex-col max-w-xs w-full pt-5 pb-4 bg-dark-0">
+            <div className="relative flex flex-col flex-1 w-full max-w-xs pt-5 pb-4 bg-dark-0">
               <Transition.Child
                 as={Fragment}
                 enter="ease-in-out duration-300"
@@ -56,41 +56,29 @@ export const ChatLauout: React.FC = ({ children }) => {
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
               >
-                <div className="absolute top-0 right-0 -mr-12 pt-2">
+                <div className="absolute top-0 right-0 pt-2 -mr-12">
                   <button
                     type="button"
-                    className="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                    className="flex items-center justify-center w-10 h-10 ml-1 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
                     onClick={() => setSidebarOpen(false)}
                   >
                     <span className="sr-only">Close sidebar</span>
-                    <XIcon className="h-6 w-6 text-white" aria-hidden="true" />
+                    <XIcon className="w-6 h-6 text-white" aria-hidden="true" />
                   </button>
                 </div>
               </Transition.Child>
-              <div className="flex-shrink-0 flex items-center px-4">
+              <div className="flex items-center flex-shrink-0 px-4">
                 <h1 className="text-2xl font-semibold text-primary">
                   ETH Emoji Chat
                 </h1>
-                {/* <img
-                    className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg"
-                    alt="Workflow"
-                  /> */}
               </div>
-              <div className="mt-5 flex-1 h-0 overflow-y-auto">
+              <div className="flex-1 h-0 mt-5 overflow-y-auto">
                 <nav className="px-2 space-y-1">
                   <h2 className="px-2 text-gray-400">Users</h2>
                   {members.map((item) => (
                     <a
                       key={item.clientId}
-                      // href={item.href}
-                      className="group flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-200"
-                      // className={classNames(
-                      //   item.current
-                      //     ? 'bg-gray-100 text-gray-900'
-                      //     : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
-                      //   'group flex items-center px-2 py-2 text-base font-medium rounded-md'
-                      // )}
+                      className="flex items-center px-2 py-2 text-base font-medium text-gray-200 rounded-md group"
                     >
                       {shortAddress(item.clientId)}
                     </a>
@@ -99,41 +87,24 @@ export const ChatLauout: React.FC = ({ children }) => {
               </div>
             </div>
           </Transition.Child>
-          <div className="flex-shrink-0 w-14" aria-hidden="true">
-            {/* Dummy element to force sidebar to shrink to fit close icon */}
-          </div>
+          <div className="flex-shrink-0 w-14" aria-hidden="true"></div>
         </Dialog>
       </Transition.Root>
-
-      {/* Static sidebar for desktop */}
       <div className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
-        {/* Sidebar component, swap this element with another sidebar if you like */}
-        <div className="flex flex-col flex-grow border-r border-dark-3 pt-5 bg-dark-0 overflow-y-auto">
+        <div className="flex flex-col flex-grow pt-5 overflow-y-auto border-r border-dark-3 bg-dark-0">
           <div className="flex items-center flex-shrink-0 px-4">
             <h1 className="text-2xl font-semibold text-primary">
               ETH Emoji Chat
             </h1>
           </div>
-          <div className="mt-5 flex-grow flex flex-col">
+          <div className="flex flex-col flex-grow mt-5">
             <nav className="flex-1 px-2 pb-4 space-y-1">
               <h2 className="px-2 text-gray-400">Users</h2>
               {members.map((item) => (
                 <a
                   key={item.clientId}
-                  // href={item.href}
-                  className="group flex items-center px-2 py-2 text-sm font-medium rounded-md text-gray-200"
-                  // className={classNames(
-                  //   item.current ? 'bg-gray-100 text-gray-900' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
-                  //   'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
-                  // )}
+                  className="flex items-center px-2 py-2 text-sm font-medium text-gray-200 rounded-md group"
                 >
-                  {/* <item.icon
-                      className={classNames(
-                        item.current ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500',
-                        'mr-3 flex-shrink-0 h-6 w-6'
-                      )}
-                      aria-hidden="true"
-                    /> */}
                   {shortAddress(item.clientId)}
                 </a>
               ))}
@@ -141,72 +112,42 @@ export const ChatLauout: React.FC = ({ children }) => {
           </div>
         </div>
       </div>
-      <div className="md:pl-64 flex flex-col flex-1">
-        <div className="sticky top-0 z-10 flex-shrink-0 flex h-16 bg-dark-0 shadow">
+      <div className="flex flex-col flex-1 md:pl-64">
+        <div className="sticky top-0 z-10 flex flex-shrink-0 h-16 shadow bg-dark-0">
           <button
             type="button"
             className="px-4 border-r border-dark-3 text-primary focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500 md:hidden"
             onClick={() => setSidebarOpen(true)}
           >
             <span className="sr-only">Open sidebar</span>
-            <MenuAlt2Icon className="h-6 w-6" aria-hidden="true" />
+            <MenuAlt2Icon className="w-6 h-6" aria-hidden="true" />
           </button>
-          <div className="flex-1 px-4 flex justify-between">
-            <div className="flex-1 flex items-center">
+          <div className="flex justify-between flex-1 px-4">
+            <div className="flex items-center flex-1">
               <div>
                 <button
                   onClick={() => setOpen(true)}
-                  className="btn-primary py-1 md:hidden"
+                  className="py-1 btn-primary md:hidden"
                 >
                   Shop
                 </button>
                 <button
                   onClick={() => setOpen(true)}
-                  className="btn-primary py-1 hidden md:flex"
+                  className="hidden py-1 btn-primary md:flex"
                 >
                   Buy more Emoji!
                 </button>
               </div>
-              {/* <form className="w-full flex md:ml-0" action="#" method="GET">
-                <label htmlFor="search-field" className="sr-only">
-                  Search
-                </label>
-                <div className="relative w-full text-gray-400 focus-within:text-gray-600">
-                  <div className="absolute inset-y-0 left-0 flex items-center pointer-events-none">
-                    <SearchIcon className="h-5 w-5" aria-hidden="true" />
-                  </div>
-                  <input
-                    id="search-field"
-                    className="block w-full h-full pl-8 pr-3 py-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-0 focus:border-transparent sm:text-sm"
-                    placeholder="Search"
-                    type="search"
-                    name="search"
-                  />
-                </div>
-              </form> */}
             </div>
-            <div className="ml-4 flex items-center md:ml-6">
-              {/* <button
-                type="button"
-                className="bg-dark-0 p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
-                <span className="sr-only">View notifications</span>
-                <BellIcon className="h-6 w-6" aria-hidden="true" />
-              </button> */}
-
+            <div className="flex items-center ml-4 md:ml-6">
               {/* Profile dropdown */}
-              <Menu as="div" className="ml-3 relative">
+              <Menu as="div" className="relative ml-3">
                 <div>
-                  <Menu.Button className="max-w-xs bg-dark-0 flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                  <Menu.Button className="flex items-center max-w-xs text-sm rounded-full bg-dark-0 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     <span className="sr-only">Open user menu</span>
-                    <div className="border rounded-2xl border-dark-3 text-primary text-xl py-1 px-3">
+                    <div className="px-3 py-1 text-xl border rounded-2xl border-dark-3 text-primary">
                       {address && shortAddress(address)}
                     </div>
-                    {/* <img
-                        className="h-8 w-8 rounded-full"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                        alt=""
-                      /> */}
                   </Menu.Button>
                 </div>
                 <Transition
@@ -218,7 +159,7 @@ export const ChatLauout: React.FC = ({ children }) => {
                   leaveFrom="transform opacity-100 scale-100"
                   leaveTo="transform opacity-0 scale-95"
                 >
-                  <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-dark-0 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  <Menu.Items className="absolute right-0 w-48 py-1 mt-2 origin-top-right rounded-md shadow-lg bg-dark-0 ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <Menu.Item>
                       <a
                         className="block px-4 py-2 text-sm text-gray-300 cursor-pointer"
@@ -227,21 +168,6 @@ export const ChatLauout: React.FC = ({ children }) => {
                         Log Out
                       </a>
                     </Menu.Item>
-                    {/* {userNavigation.map((item) => (
-                        <Menu.Item key={item.name}>
-                          {({ active }) => (
-                            <a
-                              href={item.href}
-                              className={classNames(
-                                active ? 'bg-gray-100' : '',
-                                'block px-4 py-2 text-sm text-gray-700'
-                              )}
-                            >
-                              {item.name}
-                            </a>
-                          )}
-                        </Menu.Item>
-                      ))} */}
                   </Menu.Items>
                 </Transition>
               </Menu>
@@ -249,22 +175,8 @@ export const ChatLauout: React.FC = ({ children }) => {
           </div>
         </div>
 
-        <main className="flex-1 flex">
-          {/* <div className="py-6"> */}
-          {/* <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                <h1 className="text-2xl font-semibold text-gray-900">
-                  Dashboard
-                </h1>
-              </div> */}
-          <div className="w-full px-4">
-            {children}
-            {/* Replace with your content */}
-            {/* <div className="py-4">
-                  <div className="border-4 border-dashed border-gray-200 rounded-lg h-96" />
-                </div> */}
-            {/* /End replace */}
-          </div>
-          {/* </div> */}
+        <main className="flex flex-1">
+          <div className="w-full px-4">{children}</div>
         </main>
       </div>
     </>

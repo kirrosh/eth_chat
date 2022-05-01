@@ -2,7 +2,7 @@ import { utils, getDefaultProvider } from 'ethers'
 
 import EmojiPacks from 'artifacts/EmojiPacks.json'
 import EmojiTrader from 'artifacts/EmojiTrader.json'
-import { emoji_address_ropsten } from 'ethereum/address/emoji'
+import { emoji_address_ropsten } from 'artifacts/emoji_address'
 import { useEffect, useMemo, useState } from 'react'
 import { useContractRead, useContractWrite, useSigner } from 'wagmi'
 

@@ -12,22 +12,22 @@ const Home: NextPage = () => {
   useInitAuth()
   useInitAbly(address)
   return (
-    <div className="px-2 py-1 h-screen w-screen">
+    <div className="w-screen h-screen px-2 py-1">
       <Head>
         <title>Ethereum Chat</title>
         <meta name="description" content="Ethereum Chat" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="h-full w-full flex">
+      <main className="flex w-full h-full">
         {loading ? (
-          <div className="h-full w-full grid place-items-center">
-            <CgSpinner className="animate-spin w-12 h-12 text-primary" />
+          <div className="grid w-full h-full place-items-center">
+            <CgSpinner className="w-12 h-12 animate-spin text-primary" />
           </div>
         ) : (
           <>
             {!address && (
-              <div className="h-full w-full grid place-content-center gap-4">
+              <div className="grid w-full h-full gap-4 place-content-center">
                 <Image
                   src="/metamask.svg"
                   height={100}

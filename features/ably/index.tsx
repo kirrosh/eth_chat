@@ -1,7 +1,7 @@
 import Ably from 'ably/promises'
 import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { useEffect } from 'react'
-import { union, unionBy } from 'lodash'
+import { unionBy } from 'lodash'
 
 export const ablyAtom = atom<Ably.Realtime | null>(null)
 
